@@ -6,7 +6,7 @@ from .modules.bootstrap_helper import BootstrapContextualClasses
 from .modules.terrain_tables import TerrainTables
 from .modules.ingredients import Ingredients
 from .modules.donjon.calendar import ElderanCalendar
-from .modules.surprise import Surprise
+from .modules.mystery import Mystery
 from .utilities.generic import create_select_data, update_selected
 from .utilities.dice import Dice
 
@@ -385,41 +385,56 @@ def dnd_calendar_schedule(year, month, day):
 
 def _validate_code(code: str):
     if not code or not code.strip():
-        return render_template('surprise/invalid.html', title='Hass.io Web | Invalid code', scripts=['surprise'])
+        return render_template(
+            'mystery/invalid.html',
+            title='Hass.io Web | Invalid code',
+            scripts=['mystery']
+        )
 
-    if not Surprise.is_valid_code(code):
-        return render_template('surprise/invalid.html', title='Hass.io Web | Invalid code', scripts=['surprise'], invalid_code=code)
+    if not Mystery.is_valid_code(code):
+        return render_template(
+            'mystery/invalid.html',
+            title='Hass.io Web | Invalid code',
+            scripts=['mystery'],
+            invalid_code=code
+        )
 
-    if not Surprise.is_unlocked_code(code):
-        date = Surprise.get_unlock_date_for_code(code)
-        return render_template('surprise/locked.html', title='Hass.io Web | Locked code', scripts=['surprise'], locked_code=code, unlock_date=date.strftime(Surprise.DATE_FORMAT))
+    if not Mystery.is_unlocked_code(code):
+        date = Mystery.get_unlock_date_for_code(code)
+        return render_template(
+            'mystery/locked.html',
+            title='Hass.io Web | Locked code',
+            scripts=['mystery'],
+            locked_code=code,
+            unlock_date=date.strftime(Mystery.DATE_FORMAT)
+        )
 
 
 @app.route('/mystery', methods=[HttpMethods.GET, HttpMethods.POST])
-def surprise():
+def mystery():
     if HttpMethods.is_get(request.method):
-        return render_template('surprise/index.html', favicon='surprise/mystery', title='Hass.io Web | Surprise!', scripts=['surprise'])
+        return render_template('mystery/index.html', favicon='mystery/mystery', title='Hass.io Web | Surprise!', scripts=['mystery'])
 
     code = request.form.get('input_code')
     result = _validate_code(code)
     if result:
         return result
 
-    return redirect(url_for('surprise_code', code=code))
+    return redirect(url_for('mystery_code', code=code))
 
 
 @app.route('/mystery/<string:code>', methods=[HttpMethods.GET])
-def surprise_code(code: str):
+def mystery_code(code: str):
     result = _validate_code(code)
     if result:
         return result
 
     return render_template(
-        'surprise/code.html', title=f'Hass.io Web | {Surprise.get_title_for_code(code)}',
-        favicon='surprise/mystery',
-        scripts=['surprise'],
+        'mystery/code.html', title=f'Hass.io Web | {Mystery.get_title_for_code(code)}',
+        favicon='mystery/mystery',
+        scripts=['mystery'],
         code=code,
-        code_title=Surprise.get_title_for_code(code)
+        code_title=Mystery.get_title_for_code(code)
     )
 
 

@@ -140,7 +140,7 @@ input:checked + .slider:before {
 /*#endregion*/
 
 /*#region Mystery*/
-.surprise-code {
+.mystery-code {
   font-family: Consolas, monaco, monospace;
   font-weight: bold;
 }
@@ -229,39 +229,39 @@ input:checked + .slider:before {
 }
 
 .tile-1 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_001.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_001.png');
 }
 
 .tile-2 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_002.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_002.png');
 }
 
 .tile-3 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_003.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_003.png');
 }
 
 .tile-4 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_004.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_004.png');
 }
 
 .tile-5 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_005.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_005.png');
 }
 
 .tile-6 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_006.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_006.png');
 }
 
 .tile-7 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_007.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_007.png');
 }
 
 .tile-8 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_008.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_008.png');
 }
 
 .tile-9 {
-  background-image: url('../img/surprise/sliding_puzzle/image_part_009.png');
+  background-image: url('../img/mystery/sliding_puzzle/image_part_009.png');
 }
 
 /* The flip box container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */

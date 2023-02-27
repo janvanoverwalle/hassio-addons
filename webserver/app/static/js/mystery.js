@@ -21,9 +21,9 @@ function clear_used_codes() {
 }
 
 function handle_used_codes() {
-    const surprise_code = document.getElementById('surprise-code');
-    if (surprise_code) {
-        handle_new_code(surprise_code.textContent);
+    const mystery_code = document.getElementById('mystery-code');
+    if (mystery_code) {
+        handle_new_code(mystery_code.textContent);
     }
 
     const container = document.getElementById('used-codes-list');
@@ -58,7 +58,7 @@ function handle_used_codes_list(container) {
     //used_codes.sort();
     for (code of used_codes) {
         const span = document.createElement('span');
-        span.classList.add('surprise-code');
+        span.classList.add('mystery-code');
         span.textContent = code;
 
         const a = document.createElement('a');

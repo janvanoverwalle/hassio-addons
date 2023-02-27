@@ -11,10 +11,10 @@
       {% if not invalid_code %}
       That appears to be an invalid code. 
       {% else %}
-      The code <span class="surprise-code">{{ invalid_code }}</span> appears to be invalid.
+      The code <span class="mystery-code">{{ invalid_code }}</span> appears to be invalid.
       {% endif %}
       </p>
-      <p>Maybe <a href="{{ url_for('surprise') }}">go back</a> and try again?</p>
+      <p>Maybe <a href="{{ url_for('mystery') }}">go back</a> and try again?</p>
     </div>
   </div>
 </div>
