@@ -170,7 +170,7 @@ function sliding_puzzle_game() {
     document.querySelector('#solve').addEventListener('click', solve, true);
     var slider_solved = localStorage.getItem('slider_solved') === 'true';
     if (!slider_solved) {
-        document.querySelector('.tile-3').remove();
+        document.querySelector('.tile-' + tileMap.empty.tileNumber).remove();
     }
     var tiles = document.querySelectorAll('.tile');
     var delay = 0;
@@ -218,6 +218,10 @@ function sliding_puzzle_game() {
     }
 
     function tileClicked(event) {
+        if (localStorage.getItem('slider_solved') === 'true') {
+            return;
+        }
+
         moveTile(event.target);
 
         if (checkSolution()) {
@@ -234,14 +238,22 @@ function sliding_puzzle_game() {
     }
 
     function puzzleSolved(timeout) {
-        var solved = localStorage.getItem('slider_solved') === 'true';
-        if (solved) {
+        if (localStorage.getItem('slider_solved') === 'true') {
             return;
         }
+
+        var li = document.createElement('li');
+        li.classList.add('tile', 'tile-3');
+        li.setAttribute('value', '3');
+        li.style.transitionDuration = '2s';
+        var ul = document.querySelector('.tile-2').parentElement;
+        ul.insertBefore(li, ul.children[0]);
+        setTimeout(setup, 100, li);
 
         var tiles = document.querySelectorAll('.tile');
         for (var i = 0; i < tiles.length; i++) {
             tiles[i].removeEventListener('click', tileClicked);
+            tiles[i].style.cursor = 'default';
         };
 
         timeout = timeout === undefined ? 500 : timeout;

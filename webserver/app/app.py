@@ -388,14 +388,16 @@ def _validate_code(code: str):
         return render_template(
             'mystery/invalid.html',
             title='Hass.io Web | Invalid code',
-            scripts=['mystery']
+            css=['mystery'],
+            js=['mystery']
         )
 
     if not Mystery.is_valid_code(code):
         return render_template(
             'mystery/invalid.html',
             title='Hass.io Web | Invalid code',
-            scripts=['mystery'],
+            css=['mystery'],
+            js=['mystery'],
             invalid_code=code
         )
 
@@ -404,7 +406,8 @@ def _validate_code(code: str):
         return render_template(
             'mystery/locked.html',
             title='Hass.io Web | Locked code',
-            scripts=['mystery'],
+            css=['mystery'],
+            js=['mystery'],
             locked_code=code,
             unlock_date=date.strftime(Mystery.DATE_FORMAT)
         )
@@ -413,7 +416,13 @@ def _validate_code(code: str):
 @app.route('/mystery', methods=[HttpMethods.GET, HttpMethods.POST])
 def mystery():
     if HttpMethods.is_get(request.method):
-        return render_template('mystery/index.html', favicon='mystery/mystery', title='Hass.io Web | Surprise!', scripts=['mystery'])
+        return render_template(
+            'mystery/index.html',
+            favicon='mystery/mystery',
+            title='Hass.io Web | Surprise!',
+            css=['mystery'],
+            js=['mystery']
+        )
 
     code = request.form.get('input_code')
     result = _validate_code(code)
@@ -432,7 +441,8 @@ def mystery_code(code: str):
     return render_template(
         'mystery/code.html', title=f'Hass.io Web | {Mystery.get_title_for_code(code)}',
         favicon='mystery/mystery',
-        scripts=['mystery'],
+        css=['mystery'],
+        js=['mystery'],
         code=code,
         code_title=Mystery.get_title_for_code(code)
     )
