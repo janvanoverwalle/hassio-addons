@@ -1,0 +1,100 @@
+{% extends "content.html" %} {% block content %}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-sm bottom-spacer-sm">
+      <h2>Gathering</h2>
+      <hr>
+      <div class="w-100 pl-2 pr-4">
+        <form method="post" id="gathering_form">
+          <!-- Player Roll input -->
+          {% with name='gathering_roll', label='Player Roll', type='number', default_value=prev_gather_roll, placeholder='0' %}
+            {% include "components/input.html" %}
+          {% endwith %}
+
+          <!-- Travel Method input -->
+          {% with name='travel_method', label='Travel Method', class='mb-3', options=travel_options %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <!-- Terrain input -->
+          {% with name='terrain_type', label='Terrain', class='mb-3', options=terrain_options %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <input type="submit" class="btn btn-primary" value="Gather">
+        </form>
+
+        {% if gathering_result_class %}
+        <div class="mt-4">
+          <h4 class="text-{{ gathering_result_class }}">Result</h4>
+          <p>{{ result_msg|safe }}</p>
+          {% if gathering_successful %}
+            {% for ingredient in ingredients %}
+              <p>
+                {% if ingredient.msg %}
+                  <span class="text-warning">{{ ingredient.msg }} </span>
+                {% endif %}
+                <span>Succesfully gathered {{ ingredient.amount }} {{ ingredient.ingredient.name }}.</span>
+              </p>
+              {% if ingredient.remarks %}
+                <p>{{ ingredient.remarks }}</p>
+              {% endif %}
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Description: </b>{{ ingredient.ingredient.description }}</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Rarity: </b>
+                {{ ingredient.ingredient.rarity }}
+                ({{ ingredient.ingredient.price_range[0] }} - {{ ingredient.ingredient.price_range[1] }}gp)
+              </p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>DC: </b>{{ ingredient.ingredient.dc }}</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Terrain: </b>{{ ', '.join(ingredient.ingredient.terrain) }}</p>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Effect: </b>{{ ingredient.ingredient.details|safe }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div> <!-- /column -->
+
+    <div class="col-sm">
+      <h2>Identifying</h2>
+      <hr>
+      <div class="w-100 pl-2 pr-4">
+        <form method="post" id="identifying_form">
+          <!-- Player Roll input -->
+          {% with name='identify_roll', label='Player Roll', type='number', default_value=prev_identify_roll, placeholder='0' %}
+            {% include "components/input.html" %}
+          {% endwith %}
+
+          <!-- Ingredient input -->
+          {% with name='identify_ingredient', label='Ingredient', class='mb-3', options=ingredient_options %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <input type="submit" class="btn btn-primary" value="Identify">
+        </form>
+
+        {% if identify_result_class %}
+        <div class="mt-4">
+          <h4 class="text-{{ identify_result_class }}">Result</h4>
+          <p>{{ result_msg|safe }}</p>
+          {% if identify_successful %}
+          <h5>{{ ingredient.name }}</h5>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Description: </b>{{ ingredient.description }}</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Type: </b>{{ ', '.join(ingredient.type) }}</p>
+            {% if show_details %}
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Rarity: </b>
+              {{ ingredient.rarity }}
+              ({{ ingredient.price_range[0] }} - {{ ingredient.price_range[1] }}gp)
+            </p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>DC: </b>{{ '%+d' % ingredient.dc }}</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Terrain: </b>{{ ', '.join(ingredient.terrain) }}</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;<b>Effect: </b>{{ ingredient.details|safe }}</p>
+            {% endif %}
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      </div>
+    </div> <!-- /column -->
+  </div> <!-- /row -->
+</div> <!-- /container -->
+{% endblock %}

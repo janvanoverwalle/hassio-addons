@@ -1,0 +1,50 @@
+{% extends "content.html" %} {% block content %}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-sm bottom-spacer-sm">
+      <h2>Crafting</h2>
+      <hr>
+      <div class="w-100 pl-2 pr-4">
+        <form method="post" id="crafting_form">
+          <!-- Base Ingredient input -->
+          {% with name='base_ingredient', label='Base Ingredient', class='mb-3', options=base_ingredient_options, onchange='on_base_ingredient_change(this)' %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <!-- Ingredient input -->
+          {% with name='ingredient_1', label='Ingredient 1', class='mb-3 d-none', options=ingredient_options, selected=1 %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <!-- Ingredient input -->
+          {% with name='ingredient_2', label='Ingredient 2', class='mb-3 d-none', options=ingredient_options, selected=2 %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <!-- Ingredient input -->
+          {% with name='ingredient_3', label='Ingredient 3', class='mb-3 d-none', options=ingredient_options, selected=3 %}
+            {% include "components/dropdown.html" %}
+          {% endwith %}
+
+          <input type="submit" class="btn btn-primary" value="Craft">
+        </form>
+
+        {% if crafting_result_class %}
+        <div class="mt-4">
+          <h4 class="text-{{ crafting_result_class }}">Result</h4>
+          <p>{{ result_msg|safe }}</p>
+          {% if ingredients %}
+            <span><b>Effects:</b></span>
+            <ul>
+            {% for ingredient in ingredients %}
+              <li>{{ ingredient.details|safe }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div> <!-- /column -->
+  </div> <!-- /row -->
+</div> <!-- /container -->
+{% endblock %}
