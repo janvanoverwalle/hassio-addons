@@ -17,6 +17,7 @@ window.onload = (event) => {
     }
 }
 
+//#region Flip cards
 function flipCard(degrees) {
     if (degrees === undefined) {
         degrees = 180;
@@ -37,6 +38,7 @@ function addFlipCardEventListeners(duration) {
     var backElements = document.getElementsByClassName('flip-box-back');
     backElements[0].addEventListener('click', () => flipCard(0), true);
 }
+//#endregion
 
 //#region Used codes
 function clear_used_codes() {
@@ -65,7 +67,6 @@ function handle_new_code(code) {
     used_codes = used_codes ? JSON.parse(used_codes) : [];
 
     if (!used_codes.includes(code)) {
-        console.log('Caching code: ' + code);
         used_codes.push(code);
     }
 
@@ -405,7 +406,8 @@ function sliding_puzzle_game() {
             document.getElementById('audio-player').play();
         }, timeout);
 
-        setTimeout(flipCard, timeout + 10 * 1000);
+        setTimeout(() => flipCard(180), timeout + 10000);
+        setTimeout(() => addFlipCardEventListeners(2), timeout + 15000);
 
         localStorage.setItem('slider_solved', 'true');
     }
