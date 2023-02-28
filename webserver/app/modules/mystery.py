@@ -74,26 +74,25 @@ class Mystery:
 
 
 class Riddles:
-    ENCODING = 'UTF-8'
-    ANSWER_BY_RIDDLE_ID = {
-        1: 'answer1',
-        2: 'answer2',
-        3: 'answer3',
-        4: 'answer4',
-        5: 'answer5'
+    ANSWERS_BY_RIDDLE_ID = {
+        1: 'library',
+        2: 'silence',
+        3: 'e',
+        4: 'pingu',
+        5: 'teeth'
     }
 
     @classmethod
     def _hash(cls, text: str):
-        return hashlib.sha256(text.encode(cls.ENCODING)).hexdigest()
+        return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
     @classmethod
     def get_answer(cls, riddle_id: int, hash=False):
-        answer = cls.ANSWER_BY_RIDDLE_ID[riddle_id]
+        answer = cls.ANSWERS_BY_RIDDLE_ID[riddle_id]
         if hash:
             answer = cls._hash(answer)
         return answer
 
     @classmethod
     def get_all_answers(cls, hash=False):
-        return [cls._hash(v) if hash else v for _, v in cls.ANSWER_BY_RIDDLE_ID.items()]
+        return [cls._hash(v) if hash else v for _, v in cls.ANSWERS_BY_RIDDLE_ID.items()]
