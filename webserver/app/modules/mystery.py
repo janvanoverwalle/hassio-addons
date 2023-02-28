@@ -5,7 +5,6 @@ from enum import Enum
 
 
 class ValidCodes(Enum):
-    TEST = 'test'
     EL_BROCCO = 'elbrocco'
     LUSJIFER = 'lusjifer'
     RACCOON_BABUSHKA = 'raccoonbabushka'
@@ -24,14 +23,13 @@ class ValidCodes(Enum):
 class Mystery:
     DATE_FORMAT = '%d/%m/%Y %H:%M'
     CODE_UNLOCK_DATES = {
-        #ValidCodes.EL_BROCCO: datetime.strptime('10/03/2023 10:00', DATE_FORMAT),
-        #ValidCodes.LUSJIFER: datetime.strptime('17/03/2023 10:00', DATE_FORMAT),
-        #ValidCodes.RACCOON_BABUSHKA: datetime.strptime('24/03/2023 10:00', DATE_FORMAT),
-        #ValidCodes.I_LOVE_YOU: datetime.strptime('31/03/2023 10:00', DATE_FORMAT)
+        ValidCodes.EL_BROCCO: datetime.strptime('10/03/2023 10:00', DATE_FORMAT),
+        ValidCodes.LUSJIFER: datetime.strptime('17/03/2023 10:00', DATE_FORMAT),
+        ValidCodes.RACCOON_BABUSHKA: datetime.strptime('24/03/2023 10:00', DATE_FORMAT),
+        ValidCodes.I_LOVE_YOU: datetime.strptime('31/03/2023 10:00', DATE_FORMAT)
     }
 
     CODE_TITLES = {
-        ValidCodes.TEST: 'Test',
         ValidCodes.EL_BROCCO: 'El Brocco',
         ValidCodes.LUSJIFER: 'Lusjifer',
         ValidCodes.RACCOON_BABUSHKA: 'Raccoon Babushka',
