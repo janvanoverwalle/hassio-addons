@@ -160,7 +160,7 @@ function sliding_puzzle_game() {
         if (position == 1) return [2, 4];
     }
 
-    document.getElementById('reset').addEventListener('click', () => {
+    document.getElementById('reset-slider').addEventListener('click', () => {
         localStorage.removeItem('slider_solved');
         document.location.reload();
     }, true);
