@@ -385,6 +385,8 @@ def dnd_calendar_schedule(year, month, day):
 
 
 def _validate_code(code: str):
+    """Returns an appropriate response when the given code is not valid.
+    """
     if not code or not code.strip():
         return render_template(
             'mystery/invalid.html',
@@ -426,18 +428,18 @@ def mystery():
         )
 
     code = request.form.get('input_code')
-    result = _validate_code(code)
-    if result:
-        return result
+    response = _validate_code(code)
+    if response:
+        return response
 
     return redirect(url_for('mystery_code', code=code))
 
 
 @app.route('/mystery/<string:code>', methods=[HttpMethods.GET])
 def mystery_code(code: str):
-    result = _validate_code(code)
-    if result:
-        return result
+    response = _validate_code(code)
+    if response:
+        return response
 
     return render_template(
         'mystery/code.html', title=f'Hass.io Web | {Mystery.get_title_for_code(code)}',
