@@ -15,6 +15,21 @@
 }
 
 /*#region Riddles*/
+.riddle {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 7em;
+}
+
+.riddle-incorrect {
+    background-color: #F4C7C366 !important;
+}
+
+.riddle-correct {
+    background-color: #B7E1CD66 !important;
+}
+
 .riddle-1 {
     background-image: url('../img/mystery/rb/image_part_001.png');
 }

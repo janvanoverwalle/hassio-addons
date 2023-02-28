@@ -1,42 +1,66 @@
 {% include "components/go_back.html" %}
 <div class="row justify-content-center">
-  <div class="col col-lg-6">
+  <div class="col col-lg-5">
     <h2>{% if code_title %}{{ code_title }}{% else %}Lusjifer{% endif %}</h2>
-    <small class="text-muted">Riddle me this.</small>
+    <small class="text-muted">Riddle me this...</small>
+  </div>
+  <div class="col col-lg-1 mt-2">
+    <a id="reset-riddles" href="" class="button bi-arrow-counterclockwise" onclick="reset_riddles()"><span class="pl-1">Reset</span></a>
   </div>
 </div>
 <div class="row justify-content-center mt-5">
-  <div class="col-10 col-lg-6 riddle-1">
-    <div id="riddle-1">
+  <div id="last-riddle" class="col-10 col-lg-6 text-center invisible no-height">
+    <p>One last riddle to find your next code.</p>
+    <h4>What am I?</h4>
+  </div>
+</div>
+<div class="row justify-content-center invisible">
+  <div class="col-10 col-lg-6 riddle">
+    <div id="riddle-1" next="4" class="text-center">
       <p>Riddle1</p>
+      {% with name='input_riddle_1', label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
+        {% include "components/input.html" %}
+      {% endwith %}
     </div>
   </div>
 </div>
-<div class="row justify-content-center">
-  <div class="col-10 col-lg-6 riddle-2">
-    <div id="riddle-2">
+<div class="row justify-content-center invisible">
+  <div class="col-10 col-lg-6 riddle">
+    <div id="riddle-2" class="text-center">
       <p>Riddle 2</p>
+      {% with name='input_riddle_2', label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
+        {% include "components/input.html" %}
+      {% endwith %}
     </div>
   </div>
 </div>
-<div class="row justify-content-center">
-  <div class="col-10 col-lg-6 riddle-3">
-    <div id="riddle-3">
+<div class="row justify-content-center invisible">
+  <div class="col-10 col-lg-6 riddle">
+    <div id="riddle-3" next="5" class="text-center">
       <p>Riddle 3</p>
+      {% with name='input_riddle_3', label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
+        {% include "components/input.html" %}
+      {% endwith %}
     </div>
   </div>
 </div>
-<div class="row justify-content-center">
-  <div class="col-10 col-lg-6 riddle-4">
-    <div id="riddle-4">
+<div class="row justify-content-center invisible">
+  <div class="col-10 col-lg-6 riddle">
+    <div id="riddle-4" next="3" class="text-center">
       <p>Riddle 4</p>
+      {% with name='input_riddle_4', label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
+        {% include "components/input.html" %}
+      {% endwith %}
     </div>
   </div>
 </div>
-<div class="row justify-content-center">
-  <div class="col-10 col-lg-6 riddle-5">
-    <div id="riddle-5">
+<div class="row justify-content-center invisible">
+  <div class="col-10 col-lg-6 riddle">
+    <div id="riddle-5" next="2" class="text-center">
       <p>Riddle 5</p>
+      {% with name='input_riddle_5', label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
+        {% include "components/input.html" %}
+      {% endwith %}
     </div>
   </div>
 </div>

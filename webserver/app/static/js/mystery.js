@@ -5,8 +5,15 @@ window.onload = (event) => {
 
     handle_used_codes();
 
+    if (document.getElementById('reset-riddles')) {
+        _fetch_all_answers();
+        _handle_solved_riddles();
+        return;
+    }
+
     if (document.getElementById('sliding-puzzle-figure-container')) {
         sliding_puzzle_game();
+        return;
     }
 }
 
@@ -77,6 +84,125 @@ function handle_used_codes_list(container) {
     if (el) {
         el.classList.remove('invisible');
     }
+}
+//#endregion
+
+//#region Riddles
+var answers = [];
+var incorrect_timeout = undefined;
+
+function _fetch_all_answers() {
+    return fetch(document.location.origin + '/api/mystery/riddles', {
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        }
+    })
+        .then((response) => {
+            return response.json();
+        })
+        .then((json) => {
+            answers = json.answers
+        });
+}
+
+function _get_solved_riddles() {
+    var solved_riddles = localStorage.getItem('solved_riddles');
+    return solved_riddles ? JSON.parse(solved_riddles) : [];
+}
+
+function _handle_solved_riddles() {
+    var solved_riddles = _get_solved_riddles();
+    if (!solved_riddles) {
+        document.getElementById('riddle-1').parentElement.parentElement.classList.remove('invisible');
+        return;
+    }
+
+    document.getElementById('riddle-1').parentElement.parentElement.classList.remove('invisible');
+    for (riddle_id of solved_riddles) {
+        _next_riddle(riddle_id);
+    }
+}
+
+async function _hash(text) {
+    const text_as_buffer = new TextEncoder().encode(text);
+    const hash_buffer = await window.crypto.subtle.digest('SHA-256', text_as_buffer);
+    const hash_array = Array.from(new Uint8Array(hash_buffer));
+    const digest = hash_array.map(b => b.toString(16).padStart(2, '0')).join('');
+    return digest;
+}
+
+function on_riddle_input_change(sender) {
+    if (!sender.value) {
+        sender.classList.remove('text-danger', 'riddle-incorrect');
+        if (incorrect_timeout) {
+            clearTimeout(incorrect_timeout);
+        }
+        return;
+    }
+
+    var riddle_id = parseInt(sender.name.split('_').pop());
+    _hash(sender.value)
+        .then(hash => _handle_answer(sender, hash, answers[riddle_id-1]));
+}
+
+function _handle_answer(sender, user_answer, correct_answer) {
+    if (incorrect_timeout) {
+        clearTimeout(incorrect_timeout);
+    }
+
+    if (user_answer != correct_answer) {
+        sender.classList.add('text-danger', 'riddle-incorrect');
+        incorrect_timeout = setTimeout(() => sender.classList.remove('text-danger', 'riddle-incorrect'), 3000);
+        return;
+    }
+
+    sender.setAttribute('readonly', '');
+    sender.classList.remove('text-danger', 'riddle-incorrect');
+    sender.classList.add('text-success', 'riddle-correct');
+    setTimeout(() => _next_riddle(sender.name), 3000);
+}
+
+function _mark_riddle_as_correct(riddle_id) {
+    var container = document.getElementById('riddle-' + riddle_id);
+    container.classList.add('invisible');
+    container.parentElement.classList.add('riddle-' + riddle_id);
+    return container;
+}
+
+function _show_riddle(riddle_id) {
+    var container = document.getElementById('riddle-' + riddle_id);
+    container.parentElement.parentElement.classList.remove('invisible');
+    return container;
+}
+
+function _next_riddle(current_riddle) {
+    var riddle_id = current_riddle.split('_').pop();
+    var container = _mark_riddle_as_correct(riddle_id);
+
+    var solved_riddles = _get_solved_riddles();
+    if (!solved_riddles.includes(riddle_id)) {
+        solved_riddles.push(riddle_id);
+        localStorage.setItem('solved_riddles', JSON.stringify(solved_riddles));
+    }
+
+    var next_riddle_id = container.getAttribute('next');
+    if (!next_riddle_id) {
+        _handle_all_riddles_solved();
+        return;
+    }
+
+    _show_riddle(next_riddle_id);
+}
+
+function _handle_all_riddles_solved() {
+    console.log('All riddles solved!');
+    var last_riddle = document.getElementById('last-riddle');
+    last_riddle.classList.remove('invisible', 'no-height');
+}
+
+function reset_riddles() {
+    localStorage.removeItem('solved_riddles');
+    document.location.reload();
 }
 //#endregion
 
