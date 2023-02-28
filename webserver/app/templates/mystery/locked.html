@@ -11,7 +11,7 @@
       {% if not locked_code %}
       That code is still locked{% if unlock_date %} until {{ unlock_date }}{% endif %}.
       {% else %}
-      The code <span id="surprmysteryise-code" class="mystery-code">{{ locked_code }}</span> is still locked{% if unlock_date %} until {{ unlock_date }}{% endif %}.
+      The code <span id="mystery-code" class="mystery-code">{{ locked_code }}</span> is still locked{% if unlock_date %} until {{ unlock_date }}{% endif %}.
       {% endif %}
       </p>
       <p>Maybe <a href="{{ url_for('mystery') }}">go back</a> and try another one in the meantime?</p>
