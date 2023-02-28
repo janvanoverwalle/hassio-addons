@@ -1,0 +1,18 @@
+<div id="container-riddle-{{ riddle_id }}" class="row justify-content-center invisible">
+  <div class="col-10 col-lg-6 riddle">
+    <div id="riddle-{{ riddle_id }}" {% if next_riddle_id %} next="{{ next_riddle_id }}" {% endif %} class="text-center">
+      {% if riddle_text %}
+      <p>{{ riddle_text }}</p>
+      {% endif %}
+      {% if riddle_audio %}
+      <audio id="audio-player" controls>
+        <source src="{{url_for('static', filename='audio/' + riddle_audio + '.mp3')}}" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+      {% endif %}
+      {% with name='input_riddle_' + riddle_id, label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
+        {% include "components/input.html" %}
+      {% endwith %}
+    </div>
+  </div>
+</div>

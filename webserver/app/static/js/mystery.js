@@ -5,7 +5,7 @@ window.onload = (event) => {
 
     handle_used_codes();
 
-    if (document.getElementById('reset-riddles')) {
+    if (document.getElementById('riddle-container')) {
         _fetch_all_answers();
         _handle_solved_riddles();
         return;
@@ -15,6 +15,27 @@ window.onload = (event) => {
         sliding_puzzle_game();
         return;
     }
+}
+
+function flipCard(degrees) {
+    if (degrees === undefined) {
+        degrees = 180;
+    }
+    var elements = document.getElementsByClassName('flip-box-inner');
+    elements[0].style.webkitTransform = 'rotateY(' + degrees + 'deg)';
+}
+
+function addFlipCardEventListeners(duration) {
+    if (duration) {
+        var innerElements = document.getElementsByClassName('flip-box-inner');
+        innerElements[0].style.transitionDuration = duration + 's';
+    }
+
+    var frontElements = document.getElementsByClassName('flip-box-front');
+    frontElements[0].addEventListener('click', () => flipCard(180), true);
+
+    var backElements = document.getElementsByClassName('flip-box-back');
+    backElements[0].addEventListener('click', () => flipCard(0), true);
 }
 
 //#region Used codes
@@ -88,21 +109,18 @@ function handle_used_codes_list(container) {
 //#endregion
 
 //#region Riddles
-var answers = [];
+var correct_answers = [];
 var incorrect_timeout = undefined;
 
-function _fetch_all_answers() {
-    return fetch(document.location.origin + '/api/mystery/riddles', {
+async function _fetch_all_answers() {
+    const response = await fetch(document.location.origin + '/api/mystery/riddles', {
         headers: {
             'Content-Type': 'application/json; charset=UTF-8'
         }
-    })
-        .then((response) => {
-            return response.json();
-        })
-        .then((json) => {
-            answers = json.answers
-        });
+    });
+    const json = await response.json();
+    correct_answers = json.answers;
+    return correct_answers;
 }
 
 function _get_solved_riddles() {
@@ -111,15 +129,19 @@ function _get_solved_riddles() {
 }
 
 function _handle_solved_riddles() {
+    document.getElementById('container-riddle-1').classList.remove('invisible');
+
     var solved_riddles = _get_solved_riddles();
-    if (!solved_riddles) {
-        document.getElementById('riddle-1').parentElement.parentElement.classList.remove('invisible');
+    if (!solved_riddles || solved_riddles.length < 1) {
+        document.getElementById('input_riddle_1').focus();
         return;
     }
 
-    document.getElementById('riddle-1').parentElement.parentElement.classList.remove('invisible');
-    for (riddle_id of solved_riddles) {
-        _next_riddle(riddle_id);
+    for (riddle of solved_riddles) {
+        var input = document.getElementById('input_riddle_' + riddle.id);
+        input.value = riddle.answer;
+        _mark_riddle_as_correct(input);
+        _next_riddle(input, 3000);
     }
 }
 
@@ -141,8 +163,8 @@ function on_riddle_input_change(sender) {
     }
 
     var riddle_id = parseInt(sender.name.split('_').pop());
-    _hash(sender.value)
-        .then(hash => _handle_answer(sender, hash, answers[riddle_id-1]));
+    _hash(sender.value.toLowerCase())
+        .then(hash => _handle_answer(sender, hash, correct_answers[riddle_id-1]));
 }
 
 function _handle_answer(sender, user_answer, correct_answer) {
@@ -151,53 +173,64 @@ function _handle_answer(sender, user_answer, correct_answer) {
     }
 
     if (user_answer != correct_answer) {
-        sender.classList.add('text-danger', 'riddle-incorrect');
-        incorrect_timeout = setTimeout(() => sender.classList.remove('text-danger', 'riddle-incorrect'), 3000);
+        _mark_riddle_as_incorrect(sender);
         return;
     }
 
-    sender.setAttribute('readonly', '');
-    sender.classList.remove('text-danger', 'riddle-incorrect');
-    sender.classList.add('text-success', 'riddle-correct');
-    setTimeout(() => _next_riddle(sender.name), 3000);
+    _mark_riddle_as_correct(sender);
+    _record_solved_riddle(sender);
+    setTimeout(() => _next_riddle(sender), 1000);
 }
 
-function _mark_riddle_as_correct(riddle_id) {
-    var container = document.getElementById('riddle-' + riddle_id);
-    container.classList.add('invisible');
-    container.parentElement.classList.add('riddle-' + riddle_id);
-    return container;
+function _mark_riddle_as_incorrect(input, timeout) {
+    timeout = timeout === undefined ? 3000 : timeout;
+    input.classList.add('text-danger', 'riddle-incorrect');
+    incorrect_timeout = setTimeout(() => input.classList.remove('text-danger', 'riddle-incorrect'), timeout);
+}
+
+function _mark_riddle_as_correct(input) {
+    document.activeElement.blur();
+
+    input.setAttribute('readonly', '');
+    input.classList.remove('text-danger', 'riddle-incorrect');
+    input.classList.add('text-success', 'riddle-correct');
 }
 
 function _show_riddle(riddle_id) {
-    var container = document.getElementById('riddle-' + riddle_id);
-    container.parentElement.parentElement.classList.remove('invisible');
-    return container;
+    var container = document.getElementById('container-riddle-' + riddle_id);
+    container.classList.remove('invisible');
+
+    document.getElementById('input_riddle_' + riddle_id).focus();
 }
 
-function _next_riddle(current_riddle) {
-    var riddle_id = current_riddle.split('_').pop();
-    var container = _mark_riddle_as_correct(riddle_id);
-
+function _record_solved_riddle(input) {
     var solved_riddles = _get_solved_riddles();
     if (!solved_riddles.includes(riddle_id)) {
-        solved_riddles.push(riddle_id);
+        var riddle_id = input.name.split('_').pop();
+        solved_riddles.push({id: riddle_id, answer: input.value});
         localStorage.setItem('solved_riddles', JSON.stringify(solved_riddles));
     }
+}
 
+function _next_riddle(current_riddle_input, timeout) {
+    var current_riddle_id = current_riddle_input.name.split('_').pop();
+    var container = document.getElementById('riddle-' + current_riddle_id);
     var next_riddle_id = container.getAttribute('next');
     if (!next_riddle_id) {
-        _handle_all_riddles_solved();
+        _handle_all_riddles_solved(timeout);
         return;
     }
 
     _show_riddle(next_riddle_id);
 }
 
-function _handle_all_riddles_solved() {
+function _handle_all_riddles_solved(timeout) {
     console.log('All riddles solved!');
-    var last_riddle = document.getElementById('last-riddle');
-    last_riddle.classList.remove('invisible', 'no-height');
+    addFlipCardEventListeners();
+    if (timeout === undefined) {
+        timeout = 0;
+    }
+    setTimeout(() => flipCard(180), timeout);
 }
 
 function reset_riddles() {
@@ -315,14 +348,7 @@ function sliding_puzzle_game() {
     }
 
     if (slider_solved) {
-        var elements = document.getElementsByClassName('flip-box-inner');
-        elements[0].style.transitionDuration = '2s';
-
-        elements = document.getElementsByClassName('flip-box-front');
-        elements[0].addEventListener('click', () => flipCard(), true);
-
-        elements = document.getElementsByClassName('flip-box-back');
-        elements[0].addEventListener('click', () => flipCard(0), true);
+        addFlipCardEventListeners(2);
     }
     else {
         setTimeout(shuffle, delay, 30);
@@ -353,14 +379,6 @@ function sliding_puzzle_game() {
         if (checkSolution()) {
             puzzleSolved();
         }
-    }
-
-    function flipCard(degrees) {
-        if (degrees === undefined) {
-            degrees = 180;
-        }
-        var elements = document.getElementsByClassName('flip-box-inner');
-        elements[0].style.webkitTransform = 'rotateY(' + degrees + 'deg)';
     }
 
     function puzzleSolved(timeout) {
