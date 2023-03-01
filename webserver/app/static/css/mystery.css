@@ -7,6 +7,10 @@
     box-shadow: 0 0 40px 40px rgba(0, 0, 0, .1);
 }
 
+.code-incorrect {
+    background-color: #F4C7C366 !important;
+}
+
 .riddle-box {
     box-shadow: 0 0 20px 20px rgba(0, 0, 0, .1);
     background-color: #faebd7;

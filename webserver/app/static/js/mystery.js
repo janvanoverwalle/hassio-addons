@@ -5,6 +5,10 @@ window.onload = (event) => {
 
     handle_used_codes();
 
+    if (document.getElementById('form-code')) {
+        handle_form_validation();
+    }
+
     if (document.getElementById('riddle-container')) {
         _fetch_all_answers();
         _handle_solved_riddles();
@@ -37,6 +41,55 @@ function addFlipCardEventListeners(duration) {
 
     var backElements = document.getElementsByClassName('flip-box-back');
     backElements[0].addEventListener('click', () => flipCard(0), true);
+}
+//#endregion
+
+//#region Code validation
+function handle_form_validation() {
+    document.getElementById('button-submit').addEventListener('click', _validate_mystery_code, true);
+    document.getElementById('input_code').addEventListener('input', _clear_code_formatting, true);
+}
+
+function _validate_mystery_code(event) {
+    event.preventDefault();
+
+    var input = document.getElementById('input_code');
+    _validate_code(input.value)
+        .then(is_valid => {
+            if (is_valid) {
+                document.getElementById('form-code').submit();
+            }
+            else {
+                _mark_code_as_incorrect(input);
+            }
+        });
+}
+
+function _clear_code_formatting(event) {
+    input = document.getElementById('input_code');
+    input.classList.remove('text-danger', 'code-incorrect');
+}
+
+function _mark_code_as_incorrect(input) {
+    if (input === undefined) {
+        input = document.getElementById('input_code');
+    }
+    input.classList.add('text-danger', 'code-incorrect');
+    input.select();
+}
+
+async function _validate_code(code) {
+    const response = await fetch(document.location.origin + '/api/mystery/validate-code', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({
+            code: code
+        })
+    });
+    const json = await response.json();
+    return json.is_valid;
 }
 //#endregion
 

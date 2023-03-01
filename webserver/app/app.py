@@ -451,6 +451,12 @@ def mystery_code(code: str):
     )
 
 
+@app.route('/api/mystery/validate-code', methods=[HttpMethods.POST])
+def mystery_validate_code():
+    code = str(request.json['code'])
+    return jsonify({'is_valid': Mystery.is_valid_code(code.strip())})
+
+
 @app.route('/api/mystery/riddles', methods=[HttpMethods.GET])
 def mystery_riddles():
     return jsonify({'answers': Riddles.get_all_answers(hash=True)})
