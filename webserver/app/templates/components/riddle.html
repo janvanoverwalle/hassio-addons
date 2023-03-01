@@ -10,6 +10,9 @@
         Your browser does not support the audio element.
       </audio>
       {% endif %}
+      {% if riddle_image %}
+      <img src="{{url_for('static', filename='img/mystery/' + riddle_image + '.png')}}" alt="{{ riddle_image }}" class="img-fluid">
+      {% endif %}
       {% with name='input_riddle_' + riddle_id, label='Answer', type='text', class='bg-white text-right pr-4', oninput='on_riddle_input_change(this)', placeholder='Enter answer', autocomplete='off' %}
         {% include "components/input.html" %}
       {% endwith %}
