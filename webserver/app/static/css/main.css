@@ -13,8 +13,38 @@ body {
     color: var(--font-color);
 }
 
-.label, .label-8 {
-  width: 8em;
+.audio-player {
+  height: 40px;
+}
+
+@media (min-width: 1201px) {
+  .label {
+    width: 8em;
+  }
+}
+
+@media (max-width: 1200px) {
+  .label {
+    width: 8em;
+  }
+}
+
+@media (max-width: 1024px) {
+  .label {
+    width: 7em;
+  }
+}
+
+@media (max-width: 768px) {
+  .label {
+    width: 6em;
+  }
+}
+
+@media (max-width: 480px) {
+  .label {
+    width: 5em;
+  }
 }
 
 .label-a {
@@ -27,6 +57,10 @@ body {
 
 .label-4 {
   width: 4em;
+}
+
+.label-8 {
+  width: 8em;
 }
 
 .label-6 {
