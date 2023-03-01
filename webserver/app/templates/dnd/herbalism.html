@@ -7,17 +7,17 @@
       <div class="w-100 pl-2 pr-4">
         <form method="post" id="gathering_form">
           <!-- Player Roll input -->
-          {% with name='gathering_roll', label='Player Roll', type='number', default_value=prev_gather_roll, placeholder='0' %}
+          {% with name='gathering_roll', label='Player Roll', label_width='label-8', type='number', default_value=prev_gather_roll, placeholder='0' %}
             {% include "components/input.html" %}
           {% endwith %}
 
           <!-- Travel Method input -->
-          {% with name='travel_method', label='Travel Method', class='mb-3', options=travel_options %}
+          {% with name='travel_method', label='Travel Method', label_width='label-8', class='mb-3', options=travel_options %}
             {% include "components/dropdown.html" %}
           {% endwith %}
 
           <!-- Terrain input -->
-          {% with name='terrain_type', label='Terrain', class='mb-3', options=terrain_options %}
+          {% with name='terrain_type', label='Terrain', label_width='label-8', class='mb-3', options=terrain_options %}
             {% include "components/dropdown.html" %}
           {% endwith %}
 
@@ -60,12 +60,12 @@
       <div class="w-100 pl-2 pr-4">
         <form method="post" id="identifying_form">
           <!-- Player Roll input -->
-          {% with name='identify_roll', label='Player Roll', type='number', default_value=prev_identify_roll, placeholder='0' %}
+          {% with name='identify_roll', label='Player Roll', label_width='label-8', type='number', default_value=prev_identify_roll, placeholder='0' %}
             {% include "components/input.html" %}
           {% endwith %}
 
           <!-- Ingredient input -->
-          {% with name='identify_ingredient', label='Ingredient', class='mb-3', options=ingredient_options %}
+          {% with name='identify_ingredient', label='Ingredient', label_width='label-8', class='mb-3', options=ingredient_options %}
             {% include "components/dropdown.html" %}
           {% endwith %}
 
