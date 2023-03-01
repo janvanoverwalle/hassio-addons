@@ -5,7 +5,7 @@
       <p>{{ riddle_text }}</p>
       {% endif %}
       {% if riddle_audio %}
-      <audio id="audio-player" controls>
+      <audio id="audio-player" class="audio-player" controls>
         <source src="{{url_for('static', filename='audio/' + riddle_audio + '.mp3')}}" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
