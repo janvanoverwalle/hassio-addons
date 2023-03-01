@@ -1,7 +1,7 @@
 <div class="input-group {% if 'w-' not in class %} w-100 {% endif %} {{ class }}" id="{{ name }}_root">
   <div class="input-group-prepend">
     {% if not label_width %}
-      {% set label_width = 'label-8' %}
+      {% set label_width = 'label' %}
     {% endif %}
     <span class="input-group-text {{ label_width }}" id="{{ name }}_lbl">{{ label }}</span>
   </div>
