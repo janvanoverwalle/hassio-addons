@@ -96,3 +96,14 @@ class Riddles:
     @classmethod
     def get_all_answers(cls, hash=False):
         return [cls._hash(v) if hash else v for _, v in cls.ANSWERS_BY_RIDDLE_ID.items()]
+
+
+class Hints:
+    HINTS = {
+        ValidCodes.EL_BROCCO: 'You won\'t find anything sitting around like that.<br>Better get moving and start looking around!',
+        ValidCodes.RACCOON_BABUSHKA: 'When lost and cold in the dark,<br>a small flame might light the way.'
+    }
+
+    @classmethod
+    def get_hint(cls, hint: str):
+        return cls.HINTS.get(ValidCodes.from_string(hint))

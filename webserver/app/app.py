@@ -7,7 +7,7 @@ from .modules.bootstrap_helper import BootstrapContextualClasses
 from .modules.terrain_tables import TerrainTables
 from .modules.ingredients import Ingredients
 from .modules.donjon.calendar import ElderanCalendar
-from .modules.mystery import Mystery, Riddles
+from .modules.mystery import Mystery, Riddles, Hints
 from .utilities.generic import create_select_data, update_selected
 from .utilities.dice import Dice
 
@@ -460,6 +460,11 @@ def mystery_validate_code():
 @app.route('/api/mystery/riddles', methods=[HttpMethods.GET])
 def mystery_riddles():
     return jsonify({'answers': Riddles.get_all_answers(hash=True)})
+
+
+@app.route('/api/mystery/hints/<string:hint>', methods=[HttpMethods.GET])
+def mystery_hints(hint):
+    return jsonify({'hint': Hints.get_hint(hint)})
 
 
 if __name__ == "__main__":

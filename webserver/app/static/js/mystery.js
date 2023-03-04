@@ -162,6 +162,30 @@ function handle_used_codes_list(container) {
 }
 //#endregion
 
+//#region Hints
+function reveal_hint(sender) {
+    _fetch_hint(sender.value)
+        .then(hint => {
+            const parent = sender.parentElement;
+            sender.remove();
+            const p = document.createElement('p');
+            p.classList.add('text-center');
+            p.innerHTML = hint;
+            parent.appendChild(p);
+        });
+}
+
+async function _fetch_hint(value) {
+    const response = await fetch(document.location.origin + '/api/mystery/hints/' + value, {
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        }
+    });
+    const json = await response.json();
+    return json.hint;
+}
+//#endregion
+
 //#region Riddles
 var correct_answers = [];
 var incorrect_timeout = undefined;
