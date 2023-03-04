@@ -1,6 +1,6 @@
 {
   "name": "Hass.io Webserver",
-  "version": "1.5",
+  "version": "1.5.1",
   "slug": "hassio-webserver",
   "description": "A simple Flask webserver",
   "init": false,
