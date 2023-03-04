@@ -395,6 +395,8 @@ def _validate_code(code: str):
             js=['mystery']
         )
 
+    code = code.strip().lower()
+
     if not Mystery.is_valid_code(code):
         return render_template(
             'mystery/invalid.html',
@@ -432,7 +434,7 @@ def mystery():
     if response:
         return response
 
-    return redirect(url_for('mystery_code', code=code))
+    return redirect(url_for('mystery_code', code=code.strip().lower()))
 
 
 @app.route('/mystery/<string:code>', methods=[HttpMethods.GET])
@@ -440,6 +442,8 @@ def mystery_code(code: str):
     response = _validate_code(code)
     if response:
         return response
+
+    code = code.strip().lower()
 
     return render_template(
         'mystery/code.html', title=f'Hass.io Web | {Mystery.get_title_for_code(code)}',
@@ -454,7 +458,8 @@ def mystery_code(code: str):
 @app.route('/api/mystery/validate-code', methods=[HttpMethods.POST])
 def mystery_validate_code():
     code = str(request.json['code'])
-    return jsonify({'is_valid': Mystery.is_valid_code(code.strip())})
+    code = code.strip().lower()
+    return jsonify({'is_valid': Mystery.is_valid_code(code)})
 
 
 @app.route('/api/mystery/riddles', methods=[HttpMethods.GET])
@@ -462,9 +467,9 @@ def mystery_riddles():
     return jsonify({'answers': Riddles.get_all_answers(hash=True)})
 
 
-@app.route('/api/mystery/hints/<string:hint>', methods=[HttpMethods.GET])
-def mystery_hints(hint):
-    return jsonify({'hint': Hints.get_hint(hint)})
+@app.route('/api/mystery/hints/<string:code>', methods=[HttpMethods.GET])
+def mystery_hints(code):
+    return jsonify({'hint': Hints.get_hint(code)})
 
 
 if __name__ == "__main__":

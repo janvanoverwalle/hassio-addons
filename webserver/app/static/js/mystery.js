@@ -101,6 +101,11 @@ function clear_used_codes() {
     if (el) {
         el.remove();
     }
+
+    const hint = document.getElementById('initial-hint');
+    if (hint) {
+        hint.classList.remove('invisible');
+    }
 }
 
 function handle_used_codes() {
@@ -133,6 +138,12 @@ function handle_used_codes_list(container) {
         if (el) {
             el.remove();
         }
+
+        const hint = document.getElementById('initial-hint');
+        if (hint) {
+            hint.classList.remove('invisible');
+        }
+
         return;
     }
 
