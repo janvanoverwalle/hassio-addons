@@ -28,6 +28,7 @@ class Mystery:
         ValidCodes.RACCOON_BABUSHKA: datetime.strptime('24/03/2023 10:00', DATE_FORMAT),
         ValidCodes.I_LOVE_YOU: datetime.strptime('31/03/2023 10:00', DATE_FORMAT)
     }
+    CODE_UNLOCK_DATES = {}  # For debug purposes
 
     CODE_TITLES = {
         ValidCodes.EL_BROCCO: 'El Brocco',
