@@ -76,7 +76,7 @@ class Mystery:
 
 class Riddles:
     ANSWERS_BY_RIDDLE_ID = {
-        1: 'potatoe',
+        1: 'potato',
         2: 'silence',
         3: 'e',
         4: 'pingu',
