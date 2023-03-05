@@ -103,7 +103,7 @@ class Hints:
     HINTS = {
         'initial': 'Make sure to read every letter carefully.<br>Especially those that start a sentence.',
         ValidCodes.EL_BROCCO: 'You won\'t find anything sitting around like that.<br>Better get moving and start looking around!',
-        ValidCodes.RACCOON_BABUSHKA: 'When lost and cold in the dark,<br>a small flame might light the way.'
+        ValidCodes.RACCOON_BABUSHKA: 'In order to proceed, remember your ABCs.<br>Then you\'ll see just as quickly as 1 2 3.'
     }
 
     @classmethod
