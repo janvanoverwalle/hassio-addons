@@ -523,6 +523,7 @@ function sliding_puzzle_game() {
         document.querySelector('.tile-' + tileMap.empty.tileNumber).remove();
     }
     var tiles = document.querySelectorAll('.tile');
+    var tile_sound = document.getElementById('audio-player-tiles');
     var delay = 0;
     for (var i = 0; i < tiles.length; i++) {
         if (slider_solved) {
@@ -565,6 +566,7 @@ function sliding_puzzle_game() {
             return;
         }
 
+        tile_sound.play();
         moveTile(event.target);
 
         if (checkSolution()) {
