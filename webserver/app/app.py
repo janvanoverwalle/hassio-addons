@@ -241,7 +241,7 @@ def not_found(e):
 
 @app.route('/')
 def index():
-    return redirect(url_for('dnd'))
+    return redirect(url_for('mystery'))
 
 
 @app.route('/dnd')

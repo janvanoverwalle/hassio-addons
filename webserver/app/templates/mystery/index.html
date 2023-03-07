@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block base_content %}
-<div class="container my-5">
+<div class="container my-4 my-lg-5">
   <div class="row justify-content-center">
     <div class="col col-lg-6">
       <h3 class="font-weight-bold">Mystery code</h3>
@@ -10,7 +10,7 @@
       <div class="col col-lg-5">
         <input type="text" class="form-control" id="input_code" name="input_code" aria-label="input_code" placeholder="Enter code" autocapitalize="none" autocomplete="off">
         <!--<small class="form-text text-muted pl-1">Codes are case sensitive.</small>-->
-        <small class="form-text text-muted pl-1">Enter a code to reveal its secrets!</small>
+        <small class="form-text text-muted pl-1">Codes do not contain spaces or special characters.</small>
         {% if input_error %}
         <small id="input_error" class="form-text text-danger">{{ input_error }}</small>
         {% endif %}
@@ -20,13 +20,13 @@
       </div>
     </div>
   </form>
-  <div id="initial-hint" class="invisible">
+  <div id="initial-hint" class="invisible no-height">
     {% with value="initial" %}
       {% include "components/hint.html" %}
     {% endwith %}
   </div>
   <div id="used-codes-container" class="invisible">
-    <div class="row mt-5 justify-content-center">
+    <div class="row mt-4 mt-lg-5 justify-content-center">
       <div class="col col-lg-5">
         <h4 class="font-weight-bold">Unlocked codes</h4>
       </div>

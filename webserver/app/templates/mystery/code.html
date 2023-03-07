@@ -1,5 +1,5 @@
 {% extends "base.html" %} {% block base_content %}
-<div class="container my-5">
+<div class="container my-4 my-lg-5">
   {% if code %}
   <div id="mystery-code" class="invisible no-height">{{ code }}</div> <!-- Not super safe, but meh it's OK for this -->
   {% include "mystery/code_" + code + ".html" %}

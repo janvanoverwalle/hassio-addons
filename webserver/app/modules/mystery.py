@@ -7,7 +7,7 @@ from enum import Enum
 class ValidCodes(Enum):
     EL_BROCCO = 'elbrocco'
     LUSJIFER = 'lusjifer'
-    RACCOON_BABUSHKA = 'raccoonbabushka'
+    BABUSHKA_RACCOON = 'babushkaraccoon'
     I_LOVE_YOU = 'iloveyou'
 
     @staticmethod
@@ -25,15 +25,14 @@ class Mystery:
     CODE_UNLOCK_DATES = {
         ValidCodes.EL_BROCCO: datetime.strptime('10/03/2023 10:00', DATE_FORMAT),
         ValidCodes.LUSJIFER: datetime.strptime('17/03/2023 10:00', DATE_FORMAT),
-        ValidCodes.RACCOON_BABUSHKA: datetime.strptime('24/03/2023 10:00', DATE_FORMAT),
+        ValidCodes.BABUSHKA_RACCOON: datetime.strptime('24/03/2023 10:00', DATE_FORMAT),
         ValidCodes.I_LOVE_YOU: datetime.strptime('31/03/2023 10:00', DATE_FORMAT)
     }
-    CODE_UNLOCK_DATES = {}  # For debug purposes
 
     CODE_TITLES = {
         ValidCodes.EL_BROCCO: 'El Brocco',
         ValidCodes.LUSJIFER: 'Lusjifer',
-        ValidCodes.RACCOON_BABUSHKA: 'Raccoon Babushka',
+        ValidCodes.BABUSHKA_RACCOON: 'Raccoon Babushka',
         ValidCodes.I_LOVE_YOU: 'I Love You ❤️'
     }
 
@@ -103,7 +102,7 @@ class Hints:
     HINTS = {
         'initial': 'Make sure to read every letter carefully.<br>Especially those that start a sentence.',
         ValidCodes.EL_BROCCO: 'You won\'t find anything sitting around like that.<br>Better get moving and start looking around!',
-        ValidCodes.RACCOON_BABUSHKA: 'In order to proceed, remember your ABCs.<br>Then you\'ll see just as quickly as 1 2 3.'
+        ValidCodes.BABUSHKA_RACCOON: 'In order to proceed, remember your ABCs.<br>Then you\'ll see just as quickly as 1 2 3.'
     }
 
     @classmethod

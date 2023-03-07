@@ -104,7 +104,7 @@ function clear_used_codes() {
 
     const hint = document.getElementById('initial-hint');
     if (hint) {
-        hint.classList.remove('invisible');
+        hint.classList.remove('invisible', 'no-height');
     }
 }
 
@@ -141,7 +141,7 @@ function handle_used_codes_list(container) {
 
         const hint = document.getElementById('initial-hint');
         if (hint) {
-            hint.classList.remove('invisible');
+            hint.classList.remove('invisible', 'no-height');
         }
 
         return;
