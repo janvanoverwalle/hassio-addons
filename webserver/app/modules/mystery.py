@@ -5,6 +5,7 @@ from enum import Enum
 
 
 class ValidCodes(Enum):
+    PINGU = 'pingu'
     EL_BROCCO = 'elbrocco'
     LUSJIFER = 'lusjifer'
     BABUSHKA_RACCOON = 'babushkaraccoon'
@@ -30,6 +31,7 @@ class Mystery:
     }
 
     CODE_TITLES = {
+        ValidCodes.PINGU: 'Pingu',
         ValidCodes.EL_BROCCO: 'El Brocco',
         ValidCodes.LUSJIFER: 'Lusjifer',
         ValidCodes.BABUSHKA_RACCOON: 'Raccoon Babushka',

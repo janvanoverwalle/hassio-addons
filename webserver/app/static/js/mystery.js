@@ -19,7 +19,21 @@ window.onload = (event) => {
         sliding_puzzle_game();
         return;
     }
+
+    if (document.getElementById('video-player')) {
+        handle_video_player();
+        return;
+    }
 }
+
+//#region Video player
+function handle_video_player() {
+    const player = document.getElementById('video-player');
+    const height = Math.round(player.offsetWidth * (9/16));
+    player.setAttribute('height', height);
+    player.classList.remove('invisible');
+}
+//#endregion
 
 //#region Flip cards
 function flipCard(degrees) {
