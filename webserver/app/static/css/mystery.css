@@ -32,26 +32,6 @@
 .riddle-correct {
     background-color: #B7E1CD66 !important;
 }
-
-.riddle-1 {
-    background-image: url('../img/mystery/rb/image_part_001.png');
-}
-
-.riddle-2 {
-    background-image: url('../img/mystery/rb/image_part_002.png');
-}
-
-.riddle-3 {
-    background-image: url('../img/mystery/rb/image_part_003.png');
-}
-
-.riddle-4 {
-    background-image: url('../img/mystery/rb/image_part_004.png');
-}
-
-.riddle-5 {
-    background-image: url('../img/mystery/rb/image_part_005.png');
-}
 /*#endregion*/
 
 /*#region Sliding puzzle */
